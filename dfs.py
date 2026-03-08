@@ -1,3 +1,4 @@
+from collections import deque
 class DFS:
     def __init__(self):
         self.adj = [
@@ -23,6 +24,26 @@ class DFS:
     def run_algorithm(self):
         self.dfs(0)
     
+    def dfs_iter(self):
+        marked = [False] * len(self.adj)
+        self.path = []
+
+        stack = []
+        stack.append(0)
+
+        while len(stack) > 0:
+            curr = stack.pop()
+            if marked[curr] == False:
+                marked[curr] = True
+                self.path.append(curr)
+                for neighbour in self.adj[curr]:
+                    if marked[neighbour] == False:
+                        stack.append(neighbour)
+
+
+
+        
+        
     def dfs(self, curr):
         if self.visited[curr] == False:
             self.visited[curr] = True
@@ -36,9 +57,16 @@ class DFS:
 
 
     def print_traversal(self):
+        print("Normal: ", end="")
         for node in self.traversal:
             if node == self.traversal[len(self.traversal) - 1]:
                 print(node)
             else:
                 print(node, end=" -> ")
-
+        
+        print("Iterative: ", end="")
+        for node in self.path:
+            if node == self.path[len(self.path) - 1]:
+                print(node)
+            else:
+                print(node, end=" -> ")
